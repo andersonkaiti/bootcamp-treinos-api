@@ -7,6 +7,9 @@
     "dev": "tsx watch .",
     "format": "npx @biomejs/biome check --write"
   },
+  "engines": {
+    "node": ">=24.x"
+  },
   "packageManager": "pnpm@10.30.3",
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
