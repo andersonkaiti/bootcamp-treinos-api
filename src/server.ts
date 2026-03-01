@@ -1,19 +1,43 @@
 import Fastify from 'fastify'
+import {
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider,
+} from 'fastify-type-provider-zod'
+import z from 'zod'
 import { env } from './config/env.js'
 
-const fastify = Fastify({
+const app = Fastify({
   logger: true,
 })
 
-fastify.get('/', async function handler(request, reply) {
-  return { hello: 'world' }
+app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler)
+
+app.withTypeProvider<ZodTypeProvider>().route({
+  method: 'GET',
+  url: '/',
+  schema: {
+    description: 'Hello, World!',
+    tags: ['Hello, World!'],
+    response: {
+      200: z.object({
+        message: z.string(),
+      }),
+    },
+  },
+  handler: (_request, _reply) => {
+    return {
+      message: 'Hello, World!',
+    }
+  },
 })
 
 try {
-  await fastify.listen({ port: env.PORT }, () => {
+  await app.listen({ port: env.PORT }, () => {
     console.log(`Server running at http://localhost:${env.PORT}`)
   })
 } catch (err) {
-  fastify.log.error(err)
+  app.log.error(err)
   process.exit(1)
 }
