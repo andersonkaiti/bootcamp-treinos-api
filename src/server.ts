@@ -45,6 +45,29 @@ await app.register(scalarApiReference, {
   routePrefix: '/docs',
   configuration: {
     theme: 'kepler',
+    sources: [
+      {
+        title: 'Bootcamp Treinos API',
+        slug: 'bootcamp-treinos-api',
+        url: '/swagger.json',
+      },
+      {
+        title: 'Auth API',
+        slug: 'auth-api',
+        url: '/api/auth/open-api/generate-schema',
+      },
+    ],
+  },
+})
+
+app.withTypeProvider<ZodTypeProvider>().route({
+  method: 'GET',
+  url: '/swagger.json',
+  schema: {
+    hide: true,
+  },
+  handler: () => {
+    return app.swagger()
   },
 })
 
