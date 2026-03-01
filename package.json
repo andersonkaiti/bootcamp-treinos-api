@@ -4,7 +4,7 @@
   "main": "src/server.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch .",
+    "dev": "tsx --env-file=.env --watch .",
     "format": "npx @biomejs/biome check --write"
   },
   "engines": {
@@ -16,5 +16,9 @@
     "@types/node": "^25.3.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "fastify": "^5.7.4",
+    "zod": "^4.3.6"
   }
 }
