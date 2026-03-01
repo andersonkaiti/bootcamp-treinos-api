@@ -18,7 +18,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "nodenext",
-    "outDir": "dist"
+    "outDir": "dist",
+
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
 
   "include": ["src"]
