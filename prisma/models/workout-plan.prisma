@@ -1,0 +1,13 @@
+model WorkoutPlan {
+  id       String  @id @default(uuid())
+  name     String
+  isActive Boolean @default(true)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  workoutDays WorkoutDay[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

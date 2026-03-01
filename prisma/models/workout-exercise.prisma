@@ -1,0 +1,14 @@
+model WorkoutExercise {
+  id                String @id @default(uuid())
+  name              String
+  order             Int
+  sets              Int
+  reps              Int
+  restTimeInSeconds Int
+
+  workoutDay   WorkoutDay @relation(fields: [workoutDayId], references: [id])
+  workoutDayId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
