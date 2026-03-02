@@ -1,0 +1,14 @@
+model WorkoutSession {
+  id          String    @id @default(uuid())
+  // UTC (Coordinated Universal Time) é o padrão global de referência para
+  // fusos horários. Não sofre ajuste de horário de verão e é definido com
+  // base em relógios atômicos de alta precisão.
+  startedAt   DateTime  @db.Timestamptz()
+  completedAt DateTime? @db.Timestamptz()
+
+  workoutDayId String
+  workoutDay   WorkoutDay @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+}
