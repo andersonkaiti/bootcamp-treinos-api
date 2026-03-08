@@ -8,9 +8,9 @@ import {
   validatorCompiler,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import z from 'zod'
 import { env } from './config/env.ts'
 import { auth } from './lib/auth.ts'
+import { createWorkoutPlanRoute } from './routes/create-workout-plan.ts'
 
 const app = Fastify({
   logger: true,
@@ -60,6 +60,8 @@ await app.register(scalarApiReference, {
   },
 })
 
+app.register(createWorkoutPlanRoute)
+
 app.withTypeProvider<ZodTypeProvider>().route({
   method: 'GET',
   url: '/swagger.json',
@@ -68,25 +70,6 @@ app.withTypeProvider<ZodTypeProvider>().route({
   },
   handler: () => {
     return app.swagger()
-  },
-})
-
-app.withTypeProvider<ZodTypeProvider>().route({
-  method: 'GET',
-  url: '/',
-  schema: {
-    description: 'Hello, World!',
-    tags: ['Hello, World!'],
-    response: {
-      200: z.object({
-        message: z.string(),
-      }),
-    },
-  },
-  handler: (_request, _reply) => {
-    return {
-      message: 'Hello, World!',
-    }
   },
 })
 

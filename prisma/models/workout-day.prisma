@@ -9,12 +9,13 @@ enum WeekDay {
 }
 
 model WorkoutDay {
-  id        String            @id @default(uuid())
-  name      String
-  isRest    Boolean           @default(false)
-  weekDay   WeekDay
-  exercises WorkoutExercise[]
-  sessions  WorkoutSession[]
+  id                         String            @id @default(uuid())
+  name                       String
+  isRest                     Boolean           @default(false)
+  weekDay                    WeekDay
+  exercises                  WorkoutExercise[]
+  sessions                   WorkoutSession[]
+  estimatedDurationInSeconds Int
 
   workoutPlanId String
   workoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
