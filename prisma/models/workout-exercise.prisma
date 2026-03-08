@@ -11,4 +11,6 @@ model WorkoutExercise {
 
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
+
+  @@map("workout_exercises")
 }
