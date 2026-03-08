@@ -1,93 +1,25 @@
 import { fromNodeHeaders } from 'better-auth/node'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
-import { WeekDay } from '../generated/prisma/enums.ts'
+import { UnauthorizedError } from '../errors/unauthorized.ts'
 import { auth } from '../lib/auth.ts'
+import { errorSchema, workoutPlanSchema } from '../schemas/index.ts'
 import { CreateWorkoutPlan } from '../use-cases/create-workout-plan.ts'
-
-/**
- * Controller -> UseCase/Service -> Repository (Prisma ORM)
- *
- * Controller: recebe os dados da requisição e valida se eles são válidos. Não
- * é responsável por regras de negócio, mas sim por validar os tipos de dados.
- *
- * UseCase: responsável pelas regras de negócio.
- *
- * UseCase: expõe um comportamento (respeita o SRP - Single Responsibility Principle).
- * - CreateWorkoutPlanUseCase
- *
- * Service: expõe vários comportamentos (não respeita o SRP).
- * - WorkoutPlanService
- *   - create()
- *   - update()
- *
- * Repository: responsável pela persistência de dados.
- */
 
 export async function createWorkoutPlanRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({
     method: 'POST',
     url: '/create-workout-plan',
     schema: {
-      body: z.object({
-        name: z.string().trim().min(1),
-        workoutDays: z.array(
-          z.object({
-            name: z.string().trim().min(1),
-            weekDay: z.enum(WeekDay),
-            isRest: z.boolean().default(false),
-            estimatedDurationInSeconds: z.number().min(1),
-            exercises: z.array(
-              z.object({
-                name: z.string().trim().min(1),
-                sets: z.number().min(1),
-                reps: z.number().min(1),
-                restTimeInSeconds: z.number().min(1),
-                order: z.number().min(0),
-              }),
-            ),
-          }),
-        ),
+      body: workoutPlanSchema.omit({
+        id: true,
       }),
       response: {
-        201: z.object({
-          id: z.uuid(),
-          name: z.string().trim().min(1),
-          workoutDays: z.array(
-            z.object({
-              name: z.string().trim().min(1),
-              weekDay: z.enum(WeekDay),
-              isRest: z.boolean().default(false),
-              estimatedDurationInSeconds: z.number().min(1),
-              exercises: z.array(
-                z.object({
-                  name: z.string().trim().min(1),
-                  sets: z.number().min(1),
-                  reps: z.number().min(1),
-                  restTimeInSeconds: z.number().min(1),
-                  order: z.number().min(0),
-                }),
-              ),
-            }),
-          ),
-        }),
-        400: z.object({
-          error: z.string(),
-          code: z.string(),
-        }),
-        401: z.object({
-          error: z.string(),
-          code: z.string(),
-        }),
-        404: z.object({
-          error: z.string(),
-          code: z.string(),
-        }),
-        500: z.object({
-          error: z.string(),
-          code: z.string(),
-        }),
+        201: workoutPlanSchema,
+        400: errorSchema,
+        401: errorSchema,
+        404: errorSchema,
+        500: errorSchema,
       },
     },
     async handler(request, reply) {
@@ -96,10 +28,7 @@ export async function createWorkoutPlanRoute(app: FastifyInstance) {
       })
 
       if (!session) {
-        return reply.status(401).send({
-          error: 'Unauthorized',
-          code: 'UNAUTHORIZED',
-        })
+        throw new UnauthorizedError('Unauthorized')
       }
 
       const createWorkoutPlan = new CreateWorkoutPlan()
