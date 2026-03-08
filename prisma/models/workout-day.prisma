@@ -15,6 +15,7 @@ model WorkoutDay {
   weekDay                    WeekDay
   exercises                  WorkoutExercise[]
   sessions                   WorkoutSession[]
+  coverImageUrl              String?
   estimatedDurationInSeconds Int
 
   workoutPlanId String

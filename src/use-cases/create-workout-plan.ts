@@ -2,9 +2,7 @@ import { NotFoundError } from '../errors/not-found.ts'
 import type { WeekDay } from '../generated/prisma/enums.ts'
 import { prisma } from '../lib/db.ts'
 
-// Data Transfer Object (DTO): o formato do dado que trafega entre a internet e
-// a aplicação.
-interface IDTO {
+interface InputDTO {
   userId: string
   name: string
   workoutDays: {
@@ -12,6 +10,26 @@ interface IDTO {
     weekDay: WeekDay
     isRest: boolean
     estimatedDurationInSeconds: number
+    coverImageUrl?: string
+    exercises: {
+      name: string
+      sets: number
+      reps: number
+      restTimeInSeconds: number
+      order: number
+    }[]
+  }[]
+}
+
+interface OutputDTO {
+  id: string
+  name: string
+  workoutDays: {
+    name: string
+    weekDay: WeekDay
+    isRest: boolean
+    estimatedDurationInSeconds: number
+    coverImageUrl?: string
     exercises: {
       name: string
       sets: number
@@ -23,14 +41,12 @@ interface IDTO {
 }
 
 export class CreateWorkoutPlan {
-  async execute(dto: IDTO) {
+  async execute(dto: InputDTO): Promise<OutputDTO> {
     const existingWorkoutPlan = await prisma.workoutPlan.findFirst({
       where: {
         isActive: true,
       },
     })
-
-    // Transaction -> Atomicidade -> ou tudo ou nada
 
     return prisma.$transaction(async (tx) => {
       if (existingWorkoutPlan) {
@@ -55,6 +71,7 @@ export class CreateWorkoutPlan {
               weekDay: workoutDay.weekDay,
               isRest: workoutDay.isRest,
               estimatedDurationInSeconds: workoutDay.estimatedDurationInSeconds,
+              coverImageUrl: workoutDay.coverImageUrl ?? undefined,
               exercises: {
                 create: workoutDay.exercises.map((exercise) => ({
                   name: exercise.name,
@@ -94,6 +111,7 @@ export class CreateWorkoutPlan {
           weekDay: day.weekDay,
           isRest: day.isRest,
           estimatedDurationInSeconds: day.estimatedDurationInSeconds,
+          coverImageUrl: day.coverImageUrl ?? undefined,
           exercises: day.exercises.map((exercise) => ({
             name: exercise.name,
             sets: exercise.sets,

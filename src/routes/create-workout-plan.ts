@@ -9,7 +9,7 @@ import { CreateWorkoutPlan } from '../use-cases/create-workout-plan.ts'
 export async function createWorkoutPlanRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({
     method: 'POST',
-    url: '/create-workout-plan',
+    url: '/workout-plans',
     schema: {
       body: workoutPlanSchema.omit({
         id: true,
