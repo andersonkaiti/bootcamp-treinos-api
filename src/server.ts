@@ -9,6 +9,7 @@ import { errorHandler } from './error-handler.ts'
 import { swaggerIntegrationsPlugin } from './lib/swagger.ts'
 import { authRoute } from './routes/auth.ts'
 import { createWorkoutPlanRoute } from './routes/create-workout-plan.ts'
+import { createWorkoutSessionRoute } from './routes/create-workout-session.ts'
 
 const app = Fastify({
   logger: true,
@@ -27,6 +28,7 @@ await app.register(fastifyCors, {
 })
 
 app.register(createWorkoutPlanRoute)
+app.register(createWorkoutSessionRoute)
 
 app.register(authRoute)
 
