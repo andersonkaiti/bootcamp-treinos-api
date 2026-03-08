@@ -9,6 +9,7 @@ import {
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { env } from './config/env.ts'
+import { errorHandler } from './error-handler.ts'
 import { auth } from './lib/auth.ts'
 import { createWorkoutPlanRoute } from './routes/create-workout-plan.ts'
 
@@ -18,6 +19,8 @@ const app = Fastify({
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+
+app.setErrorHandler(errorHandler)
 
 await app.register(fastifySwagger, {
   openapi: {
