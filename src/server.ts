@@ -8,6 +8,7 @@ import { env } from './config/env.ts'
 import { errorHandler } from './error-handler.ts'
 import { swaggerIntegrationsPlugin } from './lib/swagger.ts'
 import { authRoute } from './routes/auth/index.ts'
+import { completeWorkoutSessionRoute } from './routes/workout/complete-workout-session.ts'
 import { createWorkoutPlanRoute } from './routes/workout/create-workout-plan.ts'
 import { createWorkoutSessionRoute } from './routes/workout/create-workout-session.ts'
 
@@ -29,6 +30,7 @@ await app.register(fastifyCors, {
 
 app.register(createWorkoutPlanRoute)
 app.register(createWorkoutSessionRoute)
+app.register(completeWorkoutSessionRoute)
 
 app.register(authRoute)
 
