@@ -7,9 +7,9 @@ import {
 import { env } from './config/env.ts'
 import { errorHandler } from './error-handler.ts'
 import { swaggerIntegrationsPlugin } from './lib/swagger.ts'
-import { authRoute } from './routes/auth.ts'
-import { createWorkoutPlanRoute } from './routes/create-workout-plan.ts'
-import { createWorkoutSessionRoute } from './routes/create-workout-session.ts'
+import { authRoute } from './routes/auth/index.ts'
+import { createWorkoutPlanRoute } from './routes/workout/create-workout-plan.ts'
+import { createWorkoutSessionRoute } from './routes/workout/create-workout-session.ts'
 
 const app = Fastify({
   logger: true,

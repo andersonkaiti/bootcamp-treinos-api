@@ -1,10 +1,10 @@
 import { fromNodeHeaders } from 'better-auth/node'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { UnauthorizedError } from '../errors/unauthorized.ts'
-import { auth } from '../lib/auth.ts'
-import { errorSchema, workoutPlanSchema } from '../schemas/index.ts'
-import { CreateWorkoutPlan } from '../use-cases/create-workout-plan.ts'
+import { UnauthorizedError } from '../../errors/unauthorized.ts'
+import { auth } from '../../lib/auth.ts'
+import { errorSchema, workoutPlanSchema } from '../../schemas/index.ts'
+import { CreateWorkoutPlan } from '../../use-cases/create-workout-plan.ts'
 
 export async function createWorkoutPlanRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({

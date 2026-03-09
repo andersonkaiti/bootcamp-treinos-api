@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify'
-import { auth } from '../lib/auth.ts'
+import { auth } from '../../lib/auth.ts'
 
 export async function authRoute(app: FastifyInstance) {
   app.route({
