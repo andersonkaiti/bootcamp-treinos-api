@@ -11,6 +11,11 @@ model User {
 
   workoutPlans WorkoutPlan[]
 
+  weightInGrams       Int?
+  heightInCentimeters Int?
+  age                 Int?
+  bodyFatPercentage   Int?
+
   @@unique([email])
   @@map("user")
 }

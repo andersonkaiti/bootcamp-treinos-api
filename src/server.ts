@@ -10,6 +10,7 @@ import { swaggerIntegrationsPlugin } from './lib/swagger.ts'
 import { authRoute } from './routes/auth/index.ts'
 import { getHomeDataRoute } from './routes/home/get-home-data.ts'
 import { statsRoute } from './routes/stats.ts'
+import { userRoutes } from './routes/user/index.ts'
 import { completeWorkoutSessionRoute } from './routes/workout/complete-workout-session.ts'
 import { createWorkoutPlanRoute } from './routes/workout/create-workout-plan.ts'
 import { createWorkoutSessionRoute } from './routes/workout/create-workout-session.ts'
@@ -39,6 +40,7 @@ app.register(createWorkoutSessionRoute)
 app.register(completeWorkoutSessionRoute)
 app.register(getHomeDataRoute)
 app.register(statsRoute)
+app.register(userRoutes)
 
 app.register(authRoute)
 

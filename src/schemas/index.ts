@@ -30,15 +30,15 @@ export const workoutPlanSchema = z.object({
 })
 
 export const getWorkoutPlanResponseSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string(),
   workoutDays: z.array(
     z.object({
-      id: z.string().uuid(),
+      id: z.uuid(),
       weekDay: z.enum(WeekDay),
       name: z.string(),
       isRest: z.boolean(),
-      coverImageUrl: z.string().url().optional().nullable(),
+      coverImageUrl: z.url().optional().nullable(),
       estimatedDurationInSeconds: z.number(),
       exercisesCount: z.number(),
     }),
@@ -46,27 +46,27 @@ export const getWorkoutPlanResponseSchema = z.object({
 })
 
 export const getWorkoutDayResponseSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string(),
   isRest: z.boolean(),
-  coverImageUrl: z.string().url().optional().nullable(),
+  coverImageUrl: z.url().optional().nullable(),
   estimatedDurationInSeconds: z.number(),
   exercises: z.array(
     z.object({
-      id: z.string().uuid(),
+      id: z.uuid(),
       name: z.string(),
       order: z.number(),
       sets: z.number(),
       reps: z.number(),
       restTimeInSeconds: z.number(),
-      workoutDayId: z.string().uuid(),
+      workoutDayId: z.uuid(),
     }),
   ),
   weekDay: z.enum(WeekDay),
   sessions: z.array(
     z.object({
-      id: z.string().uuid(),
-      workoutDayId: z.string().uuid(),
+      id: z.uuid(),
+      workoutDayId: z.uuid(),
       startedAt: z.date().optional().nullable(),
       completedAt: z.date().optional().nullable(),
     }),
@@ -74,8 +74,8 @@ export const getWorkoutDayResponseSchema = z.object({
 })
 
 export const getStatsQuerySchema = z.object({
-  from: z.string().date(),
-  to: z.string().date(),
+  from: z.date(),
+  to: z.date(),
 })
 
 export const getStatsResponseSchema = z.object({
@@ -90,4 +90,30 @@ export const getStatsResponseSchema = z.object({
   completedWorkoutsCount: z.number(),
   conclusionRate: z.number(),
   totalTimeInSeconds: z.number(),
+})
+
+export const getUserTrainDataResponseSchema = z
+  .object({
+    userId: z.string(),
+    userName: z.string(),
+    weightInGrams: z.number(),
+    heightInCentimeters: z.number(),
+    age: z.number(),
+    bodyFatPercentage: z.number().int().min(0).max(100),
+  })
+  .nullable()
+
+export const upsertUserTrainDataBodySchema = z.object({
+  weightInGrams: z.number().min(1),
+  heightInCentimeters: z.number().min(1),
+  age: z.number().min(1),
+  bodyFatPercentage: z.number().int().min(0).max(100),
+})
+
+export const upsertUserTrainDataResponseSchema = z.object({
+  userId: z.string(),
+  weightInGrams: z.number(),
+  heightInCentimeters: z.number(),
+  age: z.number(),
+  bodyFatPercentage: z.number().int().min(0).max(100),
 })
