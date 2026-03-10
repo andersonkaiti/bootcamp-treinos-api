@@ -12,6 +12,7 @@ import { getHomeDataRoute } from './routes/home/get-home-data.ts'
 import { completeWorkoutSessionRoute } from './routes/workout/complete-workout-session.ts'
 import { createWorkoutPlanRoute } from './routes/workout/create-workout-plan.ts'
 import { createWorkoutSessionRoute } from './routes/workout/create-workout-session.ts'
+import { getWorkoutDayRoute } from './routes/workout/get-workout-day.ts'
 import { getWorkoutPlanRoute } from './routes/workout/get-workout-plan.ts'
 
 const app = Fastify({
@@ -32,6 +33,7 @@ await app.register(fastifyCors, {
 
 app.register(createWorkoutPlanRoute)
 app.register(getWorkoutPlanRoute)
+app.register(getWorkoutDayRoute)
 app.register(createWorkoutSessionRoute)
 app.register(completeWorkoutSessionRoute)
 app.register(getHomeDataRoute)
