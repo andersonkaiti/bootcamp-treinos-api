@@ -28,3 +28,19 @@ export const workoutPlanSchema = z.object({
     }),
   ),
 })
+
+export const getWorkoutPlanResponseSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  workoutDays: z.array(
+    z.object({
+      id: z.string().uuid(),
+      weekDay: z.enum(WeekDay),
+      name: z.string(),
+      isRest: z.boolean(),
+      coverImageUrl: z.string().url().optional().nullable(),
+      estimatedDurationInSeconds: z.number(),
+      exercisesCount: z.number(),
+    }),
+  ),
+})

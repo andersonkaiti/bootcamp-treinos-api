@@ -1,6 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { ZodError } from 'zod'
 import { ConflictError } from './errors/conflict-error.ts'
+import { ForbiddenError } from './errors/forbidden-error.ts'
 import { NotFoundError } from './errors/not-found.ts'
 import { UnauthorizedError } from './errors/unauthorized.ts'
 import { WorkoutPlanNotActiveError } from './errors/workout-plan-not-active-error.ts'
@@ -28,6 +29,13 @@ export async function errorHandler(
     return reply.status(404).send({
       error: error.message,
       code: 'NOT_FOUND_ERROR',
+    })
+  }
+
+  if (error instanceof ForbiddenError) {
+    return reply.status(403).send({
+      error: error.message,
+      code: 'FORBIDDEN_ERROR',
     })
   }
 
