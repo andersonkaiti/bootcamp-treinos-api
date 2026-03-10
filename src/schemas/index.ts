@@ -72,3 +72,22 @@ export const getWorkoutDayResponseSchema = z.object({
     }),
   ),
 })
+
+export const getStatsQuerySchema = z.object({
+  from: z.string().date(),
+  to: z.string().date(),
+})
+
+export const getStatsResponseSchema = z.object({
+  workoutStreak: z.number(),
+  consistencyByDay: z.record(
+    z.iso.date(),
+    z.object({
+      workoutDayCompleted: z.boolean(),
+      workoutDayStarted: z.boolean(),
+    }),
+  ),
+  completedWorkoutsCount: z.number(),
+  conclusionRate: z.number(),
+  totalTimeInSeconds: z.number(),
+})
