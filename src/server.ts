@@ -7,6 +7,7 @@ import {
 import { env } from './config/env.ts'
 import { errorHandler } from './error-handler.ts'
 import { swaggerIntegrationsPlugin } from './lib/swagger.ts'
+import { aiRoutes } from './routes/ai.ts'
 import { authRoute } from './routes/auth/index.ts'
 import { getHomeDataRoute } from './routes/home/get-home-data.ts'
 import { statsRoute } from './routes/stats.ts'
@@ -43,6 +44,7 @@ app.register(completeWorkoutSessionRoute)
 app.register(getHomeDataRoute)
 app.register(statsRoute)
 app.register(userRoutes)
+app.register(aiRoutes)
 
 app.register(authRoute)
 
