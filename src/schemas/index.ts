@@ -117,3 +117,38 @@ export const upsertUserTrainDataResponseSchema = z.object({
   age: z.number(),
   bodyFatPercentage: z.number().int().min(0).max(100),
 })
+
+export const listWorkoutPlansQuerySchema = z.object({
+  active: z
+    .enum(['true', 'false'])
+    .optional()
+    .transform((val) => (val === undefined ? undefined : val === 'true')),
+})
+
+export const listWorkoutPlansResponseSchema = z.array(
+  z.object({
+    id: z.uuid(),
+    name: z.string(),
+    isActive: z.boolean(),
+    workoutDays: z.array(
+      z.object({
+        id: z.uuid(),
+        name: z.string(),
+        isRest: z.boolean(),
+        coverImageUrl: z.url().optional().nullable(),
+        estimatedDurationInSeconds: z.number(),
+        weekDay: z.enum(WeekDay),
+        exercises: z.array(
+          z.object({
+            id: z.uuid(),
+            name: z.string(),
+            order: z.number(),
+            sets: z.number(),
+            reps: z.number(),
+            restTimeInSeconds: z.number(),
+          }),
+        ),
+      }),
+    ),
+  }),
+)
