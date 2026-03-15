@@ -5,10 +5,12 @@ import { env } from '../config/env.ts'
 import { prisma } from './db.ts'
 
 export const auth = betterAuth({
-  basePath: env.BASE_AUTH_URL,
+  baseURL: env.BETTER_AUTH_URL,
+  basePath: '/api/auth',
   trustedOrigins: ['http://localhost:3000'],
-  social: {
+  socialProviders: {
     google: {
+      prompt: 'select_account',
       clientId: env.GOOGLE_OAUTH_CLIENT_ID,
       clientSecret: env.GOOGLE_OAUTH_CLIENT_SECRET,
     },
