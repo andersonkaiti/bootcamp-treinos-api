@@ -11,6 +11,7 @@ export async function createWorkoutPlanRoute(app: FastifyInstance) {
     method: 'POST',
     url: '/workout-plans',
     schema: {
+      operationId: 'createWorkoutPlan',
       tags: ['Workout Plan'],
       summary: 'Create a new workout plan',
       body: workoutPlanSchema.omit({

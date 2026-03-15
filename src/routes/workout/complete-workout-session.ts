@@ -12,19 +12,20 @@ export async function completeWorkoutSessionRoute(app: FastifyInstance) {
     method: 'PATCH',
     url: '/workout-plans/:workoutPlanId/days/:workoutDayId/sessions/:sessionId',
     schema: {
+      operationId: 'completeWorkoutSession',
       tags: ['Workout Plan'],
       summary: 'Complete a workout session',
       params: z.object({
-        workoutPlanId: z.string().uuid(),
-        workoutDayId: z.string().uuid(),
-        sessionId: z.string().uuid(),
+        workoutPlanId: z.uuid(),
+        workoutDayId: z.uuid(),
+        sessionId: z.uuid(),
       }),
       body: z.object({
-        completedAt: z.string().datetime(),
+        completedAt: z.date(),
       }),
       response: {
         200: z.object({
-          id: z.string().uuid(),
+          id: z.uuid(),
           startedAt: z.date(),
           completedAt: z.date(),
         }),

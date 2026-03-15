@@ -18,6 +18,7 @@ export async function aiRoutes(app: FastifyInstance) {
     method: 'POST',
     url: '/ai',
     schema: {
+      operationId: 'chatWithAI',
       tags: ['AI'],
       summary: 'Chat with the virtual personal trainer',
     },

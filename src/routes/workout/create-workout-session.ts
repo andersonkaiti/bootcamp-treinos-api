@@ -12,15 +12,16 @@ export async function createWorkoutSessionRoute(app: FastifyInstance) {
     method: 'POST',
     url: '/workout-plans/:workoutPlanId/days/:workoutDayId/sessions',
     schema: {
+      operationId: 'createWorkoutSession',
       tags: ['Workout Plan'],
       summary: 'Create a new workout session',
       params: z.object({
-        workoutPlanId: z.string().uuid(),
-        workoutDayId: z.string().uuid(),
+        workoutPlanId: z.uuid(),
+        workoutDayId: z.uuid(),
       }),
       response: {
         201: z.object({
-          userWorkoutSessionId: z.string().uuid(),
+          userWorkoutSessionId: z.uuid(),
         }),
         400: errorSchema,
         401: errorSchema,

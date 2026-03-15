@@ -15,6 +15,7 @@ export async function listWorkoutPlansRoute(app: FastifyInstance) {
     method: 'GET',
     url: '/workout-plans',
     schema: {
+      operationId: 'listWorkoutPlans',
       tags: ['Workout Plan'],
       summary: 'List workout plans',
       querystring: listWorkoutPlansQuerySchema,

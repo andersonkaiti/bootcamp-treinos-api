@@ -15,6 +15,7 @@ export async function statsRoute(app: FastifyInstance) {
     method: 'GET',
     url: '/stats',
     schema: {
+      operationId: 'getStats',
       tags: ['Stats'],
       summary: 'Get user workout statistics',
       querystring: getStatsQuerySchema,

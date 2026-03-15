@@ -15,11 +15,12 @@ export async function getWorkoutDayRoute(app: FastifyInstance) {
     method: 'GET',
     url: '/workout-plans/:planId/days/:dayId',
     schema: {
+      operationId: 'getWorkoutDay',
       tags: ['Workout Plan'],
       summary: 'Get a workout day by ID',
       params: z.object({
-        planId: z.string().uuid(),
-        dayId: z.string().uuid(),
+        planId: z.uuid(),
+        dayId: z.uuid(),
       }),
       response: {
         200: getWorkoutDayResponseSchema,

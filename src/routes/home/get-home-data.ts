@@ -13,20 +13,19 @@ export async function getHomeDataRoute(app: FastifyInstance) {
     method: 'GET',
     url: '/home/:date',
     schema: {
+      operationId: 'getHomeData',
       tags: ['Home'],
       summary: 'Get house dashboard data',
       params: z.object({
-        date: z
-          .string()
-          .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
+        date: z.coerce.date(),
       }),
       response: {
         200: z.object({
-          activeWorkoutPlanId: z.string().uuid().nullable(),
+          activeWorkoutPlanId: z.uuid().nullable(),
           todayWorkoutDay: z
             .object({
-              workoutPlanId: z.string().uuid(),
-              id: z.string().uuid(),
+              workoutPlanId: z.uuid(),
+              id: z.uuid(),
               name: z.string(),
               isRest: z.boolean(),
               weekDay: z.enum(WeekDay),
@@ -52,6 +51,11 @@ export async function getHomeDataRoute(app: FastifyInstance) {
     async handler(request, reply) {
       const session = await auth.api.getSession({
         headers: fromNodeHeaders(request.headers),
+      })
+
+      console.log({
+        headers: fromNodeHeaders(request.headers),
+        session,
       })
 
       if (!session) {

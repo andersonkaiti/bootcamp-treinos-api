@@ -7,7 +7,7 @@ interface InputDTO {
   workoutPlanId: string
   workoutDayId: string
   sessionId: string
-  completedAt: string
+  completedAt: Date
 }
 
 interface OutputDTO {

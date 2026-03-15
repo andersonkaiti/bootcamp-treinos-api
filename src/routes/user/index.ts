@@ -17,6 +17,7 @@ export async function userRoutes(app: FastifyInstance) {
     method: 'GET',
     url: '/me',
     schema: {
+      operationId: 'getUserTrainData',
       tags: ['User'],
       summary: 'Get current user training data',
       response: {

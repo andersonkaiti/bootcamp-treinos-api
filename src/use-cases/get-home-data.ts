@@ -7,7 +7,7 @@ dayjs.extend(utc)
 
 interface InputDTO {
   userId: string
-  date: string
+  date: Date
 }
 
 interface OutputDTO {
