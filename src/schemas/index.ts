@@ -152,3 +152,30 @@ export const listWorkoutPlansResponseSchema = z.array(
     ),
   }),
 )
+export const getHomeDataParamsSchema = z.object({
+  date: z.coerce.date(),
+})
+
+export const getHomeDataResponseSchema = z.object({
+  activeWorkoutPlanId: z.uuid().nullable(),
+  todayWorkoutDay: z
+    .object({
+      workoutPlanId: z.uuid(),
+      id: z.uuid(),
+      name: z.string(),
+      isRest: z.boolean(),
+      weekDay: z.enum(WeekDay),
+      estimatedDurationInSeconds: z.number(),
+      coverImageUrl: z.url().nullable().optional(),
+      exercisesCount: z.number(),
+    })
+    .nullable(),
+  workoutStreak: z.number(),
+  consistencyByDay: z.record(
+    z.string(),
+    z.object({
+      workoutDayCompleted: z.boolean(),
+      workoutDayStarted: z.boolean(),
+    }),
+  ),
+})
