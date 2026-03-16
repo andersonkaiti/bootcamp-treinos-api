@@ -67,15 +67,15 @@ export const getWorkoutDayResponseSchema = z.object({
     z.object({
       id: z.uuid(),
       workoutDayId: z.uuid(),
-      startedAt: z.date().optional().nullable(),
-      completedAt: z.date().optional().nullable(),
+      startedAt: z.coerce.date().optional().nullable(),
+      completedAt: z.coerce.date().optional().nullable(),
     }),
   ),
 })
 
 export const getStatsQuerySchema = z.object({
-  from: z.date(),
-  to: z.date(),
+  from: z.coerce.date(),
+  to: z.coerce.date(),
 })
 
 export const getStatsResponseSchema = z.object({

@@ -21,13 +21,13 @@ export async function completeWorkoutSessionRoute(app: FastifyInstance) {
         sessionId: z.uuid(),
       }),
       body: z.object({
-        completedAt: z.date(),
+        completedAt: z.coerce.date(),
       }),
       response: {
         200: z.object({
           id: z.uuid(),
-          startedAt: z.date(),
-          completedAt: z.date(),
+          startedAt: z.coerce.date(),
+          completedAt: z.coerce.date(),
         }),
         400: errorSchema,
         401: errorSchema,
