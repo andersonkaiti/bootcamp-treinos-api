@@ -17,6 +17,7 @@ interface OutputDTO {
     coverImageUrl?: string | null
     estimatedDurationInSeconds: number
     weekDay: WeekDay
+    exercisesCount: number
     exercises: {
       id: string
       name: string
@@ -24,6 +25,7 @@ interface OutputDTO {
       sets: number
       reps: number
       restTimeInSeconds: number
+      workoutDayId: string
     }[]
   }[]
 }
@@ -65,6 +67,7 @@ export class ListWorkoutPlans {
         coverImageUrl: day.coverImageUrl,
         estimatedDurationInSeconds: day.estimatedDurationInSeconds,
         weekDay: day.weekDay,
+        exercisesCount: day.exercises.length,
         exercises: day.exercises.map((exercise) => ({
           id: exercise.id,
           name: exercise.name,
@@ -72,6 +75,7 @@ export class ListWorkoutPlans {
           sets: exercise.sets,
           reps: exercise.reps,
           restTimeInSeconds: exercise.restTimeInSeconds,
+          workoutDayId: exercise.workoutDayId,
         })),
       })),
     }))

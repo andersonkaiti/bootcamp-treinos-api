@@ -15,6 +15,7 @@ interface OutputDTO {
   isRest: boolean
   coverImageUrl?: string | null
   estimatedDurationInSeconds: number
+  exercisesCount: number
   exercises: Array<{
     id: string
     name: string
@@ -75,6 +76,7 @@ export class GetWorkoutDay {
       isRest: workoutDay.isRest,
       coverImageUrl: workoutDay.coverImageUrl,
       estimatedDurationInSeconds: workoutDay.estimatedDurationInSeconds,
+      exercisesCount: workoutDay.exercises.length,
       exercises: workoutDay.exercises.map((exercise) => ({
         id: exercise.id,
         name: exercise.name,
@@ -83,6 +85,7 @@ export class GetWorkoutDay {
         reps: exercise.reps,
         restTimeInSeconds: exercise.restTimeInSeconds,
         workoutDayId: exercise.workoutDayId,
+        exerciseCount: workoutDay.exercises.length,
       })),
       weekDay: workoutDay.weekDay,
       sessions: workoutDay.sessions.map((session) => ({
