@@ -38,11 +38,11 @@ export async function aiRoutes(app: FastifyInstance) {
       // Realiza o streaming de texto para o front-end
       // Gemini > (token) > AI SDK > (chunk) > ReadableStream > Fastify > HTTP chunk > Frontend
       const result = streamText({
-        model: google('gemini-2.0-flash'),
+        model: google('gemini-2.5-flash'),
         system: SYSTEM_PROMPT,
         // Tool: algo que o modelo consegue executar
         tools: getTools(userId),
-        stopWhen: stepCountIs(5),
+        stopWhen: stepCountIs(10),
         messages: await convertToModelMessages(messages),
       })
 
