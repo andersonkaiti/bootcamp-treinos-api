@@ -23,17 +23,23 @@ export class GetUserTrainData {
       },
     })
 
-    if (!user) {
+    if (
+      !user ||
+      user.weightInGrams === null ||
+      user.heightInCentimeters === null ||
+      user.age === null ||
+      user.bodyFatPercentage === null
+    ) {
       return null
     }
 
     return {
       userId: user.id,
       userName: user.name,
-      weightInGrams: user.weightInGrams ?? 0,
-      heightInCentimeters: user.heightInCentimeters ?? 0,
-      age: user.age ?? 0,
-      bodyFatPercentage: user.bodyFatPercentage ?? 0,
+      weightInGrams: user.weightInGrams,
+      heightInCentimeters: user.heightInCentimeters,
+      age: user.age,
+      bodyFatPercentage: user.bodyFatPercentage,
     }
   }
 }

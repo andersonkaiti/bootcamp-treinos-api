@@ -11,11 +11,13 @@ export function getTools(userId: string): ToolSet {
   return {
     getUserTrainData: tool({
       description:
-        'Busca os dados de treino do usuário autenticado (peso, altura, idade, % gordura). Retorna null se não houver dados cadastrados.',
+        'Busca os dados de treino do usuário autenticado (peso, altura, idade, % gordura). Retorna hasTrainData: false se não houver dados cadastrados.',
       inputSchema: z.object({}),
       execute: async () => {
         const getUserTrainData = new GetUserTrainData()
-        return getUserTrainData.execute(userId)
+        const result = await getUserTrainData.execute(userId)
+        if (!result) return { hasTrainData: false }
+        return { hasTrainData: true, ...result }
       },
     }),
 
