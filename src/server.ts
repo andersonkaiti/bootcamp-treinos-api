@@ -31,7 +31,10 @@ app.setErrorHandler(errorHandler)
 app.register(swaggerIntegrationsPlugin)
 
 await app.register(fastifyCors, {
-  origin: ['http://localhost:3000'],
+  origin: [
+    'http://localhost:3000',
+    'bootcamp-treinos-frontend-blond.vercel.app',
+  ],
   credentials: true,
 })
 
