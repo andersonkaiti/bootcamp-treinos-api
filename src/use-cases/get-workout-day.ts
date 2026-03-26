@@ -1,7 +1,7 @@
-import { ForbiddenError } from '../errors/forbidden-error.ts'
-import { NotFoundError } from '../errors/not-found.ts'
-import type { WeekDay } from '../generated/prisma/enums.ts'
-import { prisma } from '../lib/db.ts'
+import { ForbiddenError } from '../errors/forbidden-error'
+import { NotFoundError } from '../errors/not-found'
+import type { WeekDay } from '../generated/prisma/enums'
+import { prisma } from '../lib/db'
 
 interface InputDTO {
   userId: string

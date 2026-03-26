@@ -1,16 +1,16 @@
 import { fromNodeHeaders } from 'better-auth/node'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { UnauthorizedError } from '../../errors/unauthorized.ts'
-import { auth } from '../../lib/auth.ts'
+import { UnauthorizedError } from '../../errors/unauthorized'
+import { auth } from '../../lib/auth'
 import {
   errorSchema,
   getUserTrainDataResponseSchema,
   upsertUserTrainDataBodySchema,
   upsertUserTrainDataResponseSchema,
-} from '../../schemas/index.ts'
-import { GetUserTrainData } from '../../use-cases/get-user-train-data.ts'
-import { UpsertUserTrainData } from '../../use-cases/upsert-user-train-data.ts'
+} from '../../schemas/index'
+import { GetUserTrainData } from '../../use-cases/get-user-train-data'
+import { UpsertUserTrainData } from '../../use-cases/upsert-user-train-data'
 
 export async function userRoutes(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({

@@ -1,14 +1,14 @@
 import { fromNodeHeaders } from 'better-auth/node'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { UnauthorizedError } from '../../errors/unauthorized.ts'
-import { auth } from '../../lib/auth.ts'
+import { UnauthorizedError } from '../../errors/unauthorized'
+import { auth } from '../../lib/auth'
 import {
   errorSchema,
   getHomeDataParamsSchema,
   getHomeDataResponseSchema,
-} from '../../schemas/index.ts'
-import { GetHomeData } from '../../use-cases/get-home-data.ts'
+} from '../../schemas/index'
+import { GetHomeData } from '../../use-cases/get-home-data'
 
 export async function getHomeDataRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({

@@ -1,14 +1,14 @@
 import { fromNodeHeaders } from 'better-auth/node'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { UnauthorizedError } from '../../errors/unauthorized.ts'
-import { auth } from '../../lib/auth.ts'
+import { UnauthorizedError } from '../../errors/unauthorized'
+import { auth } from '../../lib/auth'
 import {
   errorSchema,
   listWorkoutPlansQuerySchema,
   listWorkoutPlansResponseSchema,
-} from '../../schemas/index.ts'
-import { ListWorkoutPlans } from '../../use-cases/list-workout-plans.ts'
+} from '../../schemas/index'
+import { ListWorkoutPlans } from '../../use-cases/list-workout-plans'
 
 export async function listWorkoutPlansRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({

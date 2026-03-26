@@ -1,10 +1,10 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { ZodError } from 'zod'
-import { ConflictError } from './errors/conflict-error.ts'
-import { ForbiddenError } from './errors/forbidden-error.ts'
-import { NotFoundError } from './errors/not-found.ts'
-import { UnauthorizedError } from './errors/unauthorized.ts'
-import { WorkoutPlanNotActiveError } from './errors/workout-plan-not-active-error.ts'
+import { ConflictError } from './errors/conflict-error'
+import { ForbiddenError } from './errors/forbidden-error'
+import { NotFoundError } from './errors/not-found'
+import { UnauthorizedError } from './errors/unauthorized'
+import { WorkoutPlanNotActiveError } from './errors/workout-plan-not-active-error'
 
 export async function errorHandler(
   error: Error,

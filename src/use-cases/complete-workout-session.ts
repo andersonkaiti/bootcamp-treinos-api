@@ -1,6 +1,6 @@
-import { NotFoundError } from '../errors/not-found.ts'
-import { UnauthorizedError } from '../errors/unauthorized.ts'
-import { prisma } from '../lib/db.ts'
+import { NotFoundError } from '../errors/not-found'
+import { UnauthorizedError } from '../errors/unauthorized'
+import { prisma } from '../lib/db'
 
 interface InputDTO {
   userId: string

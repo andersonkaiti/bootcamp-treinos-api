@@ -8,10 +8,10 @@ import {
 import { fromNodeHeaders } from 'better-auth/node'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { SYSTEM_PROMPT } from '../ai/system.ts'
-import { getTools } from '../ai/tools.ts'
-import { UnauthorizedError } from '../errors/unauthorized.ts'
-import { auth } from '../lib/auth.ts'
+import { SYSTEM_PROMPT } from '../ai/system'
+import { getTools } from '../ai/tools'
+import { UnauthorizedError } from '../errors/unauthorized'
+import { auth } from '../lib/auth'
 
 export async function aiRoutes(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({

@@ -6,7 +6,7 @@ import {
   jsonSchemaTransform,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import { env } from '../config/env.ts'
+import { env } from '../config/env'
 
 async function swaggerIntegrations(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({

@@ -7,7 +7,7 @@
     "dev": "tsx --env-file=.env --watch .",
     "format": "npx @biomejs/biome check --write",
     "build": "tsup",
-    "start": "node dist/server.js",
+    "start": "node --env-file=.env dist/server.js",
     "postinstall": "npx prisma generate"
   },
   "engines": {

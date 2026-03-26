@@ -2,13 +2,10 @@ import { fromNodeHeaders } from 'better-auth/node'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { UnauthorizedError } from '../../errors/unauthorized.ts'
-import { auth } from '../../lib/auth.ts'
-import {
-  errorSchema,
-  getWorkoutDayResponseSchema,
-} from '../../schemas/index.ts'
-import { GetWorkoutDay } from '../../use-cases/get-workout-day.ts'
+import { UnauthorizedError } from '../../errors/unauthorized'
+import { auth } from '../../lib/auth'
+import { errorSchema, getWorkoutDayResponseSchema } from '../../schemas/index'
+import { GetWorkoutDay } from '../../use-cases/get-workout-day'
 
 export async function getWorkoutDayRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({

@@ -1,5 +1,5 @@
 import z from 'zod'
-import { WeekDay } from '../generated/prisma/enums.ts'
+import { WeekDay } from '../generated/prisma/enums'
 
 export const errorSchema = z.object({
   error: z.string(),

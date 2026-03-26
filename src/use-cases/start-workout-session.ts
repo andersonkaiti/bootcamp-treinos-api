@@ -1,8 +1,8 @@
-import { ConflictError } from '../errors/conflict-error.ts'
-import { NotFoundError } from '../errors/not-found.ts'
-import { UnauthorizedError } from '../errors/unauthorized.ts'
-import { WorkoutPlanNotActiveError } from '../errors/workout-plan-not-active-error.ts'
-import { prisma } from '../lib/db.ts'
+import { ConflictError } from '../errors/conflict-error'
+import { NotFoundError } from '../errors/not-found'
+import { UnauthorizedError } from '../errors/unauthorized'
+import { WorkoutPlanNotActiveError } from '../errors/workout-plan-not-active-error'
+import { prisma } from '../lib/db'
 
 interface InputDTO {
   userId: string

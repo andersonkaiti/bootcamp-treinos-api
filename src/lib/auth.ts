@@ -1,8 +1,8 @@
 import { betterAuth } from 'better-auth'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { bearer, openAPI } from 'better-auth/plugins'
-import { env } from '../config/env.ts'
-import { prisma } from './db.ts'
+import { env } from '../config/env'
+import { prisma } from './db'
 
 export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,

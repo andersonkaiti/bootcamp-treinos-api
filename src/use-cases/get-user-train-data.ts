@@ -1,4 +1,4 @@
-import { prisma } from '../lib/db.ts'
+import { prisma } from '../lib/db'
 
 interface OutputDto {
   userId: string

@@ -1,11 +1,11 @@
 import type { ToolSet } from 'ai'
 import { tool } from 'ai'
 import { z } from 'zod'
-import { WeekDay } from '../generated/prisma/enums.ts'
-import { CreateWorkoutPlan } from '../use-cases/create-workout-plan.ts'
-import { GetUserTrainData } from '../use-cases/get-user-train-data.ts'
-import { ListWorkoutPlans } from '../use-cases/list-workout-plans.ts'
-import { UpsertUserTrainData } from '../use-cases/upsert-user-train-data.ts'
+import { WeekDay } from '../generated/prisma/enums'
+import { CreateWorkoutPlan } from '../use-cases/create-workout-plan'
+import { GetUserTrainData } from '../use-cases/get-user-train-data'
+import { ListWorkoutPlans } from '../use-cases/list-workout-plans'
+import { UpsertUserTrainData } from '../use-cases/upsert-user-train-data'
 
 export function getTools(userId: string): ToolSet {
   return {
