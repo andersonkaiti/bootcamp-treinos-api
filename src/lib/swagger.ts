@@ -1,5 +1,5 @@
 import fastifySwagger from '@fastify/swagger'
-import scalarApiReference from '@scalar/fastify-api-reference'
+import fastifySwaggerUi from '@fastify/swagger-ui'
 import type { FastifyInstance } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
 import {
@@ -37,19 +37,16 @@ async function swaggerIntegrations(app: FastifyInstance) {
     transform: jsonSchemaTransform,
   })
 
-  await app.register(scalarApiReference, {
+  await app.register(fastifySwaggerUi, {
     routePrefix: '/docs',
-    configuration: {
-      theme: 'kepler',
-      sources: [
+    uiConfig: {
+      urls: [
         {
-          title: 'Bootcamp Treinos API',
-          slug: 'bootcamp-treinos-api',
+          name: 'Bootcamp Treinos API',
           url: '/swagger.json',
         },
         {
-          title: 'Auth API',
-          slug: 'auth-api',
+          name: 'Auth API',
           url: '/api/auth/open-api/generate-schema',
         },
       ],
