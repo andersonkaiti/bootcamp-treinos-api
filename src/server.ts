@@ -21,6 +21,7 @@ import { listWorkoutPlansRoute } from './routes/workout/list-workout-plans'
 
 const app = Fastify({
   logger: true,
+  trustProxy: true,
 })
 
 app.setValidatorCompiler(validatorCompiler)

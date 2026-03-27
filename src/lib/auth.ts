@@ -19,4 +19,15 @@ export const auth = betterAuth({
     provider: 'postgresql',
   }),
   plugins: [openAPI(), bearer()],
+  advanced: {
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: '.treinai.space',
+    },
+    useSecureCookies: true,
+    defaultCookieAttributes: {
+      sameSite: 'none',
+      secure: true,
+    },
+  },
 })
