@@ -7,6 +7,7 @@ const envSchema = z.object({
   GOOGLE_OAUTH_CLIENT_SECRET: z.string(),
   BETTER_AUTH_URL: z.url(),
   CORS_ORIGIN: z.string(),
+  BETTER_AUTH_TRUSTED_ORIGINS: z.string(),
 })
 
 export const env = envSchema.parse(process.env)

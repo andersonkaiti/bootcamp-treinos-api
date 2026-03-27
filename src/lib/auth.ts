@@ -7,7 +7,7 @@ import { prisma } from './db'
 export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
   basePath: '/api/auth',
-  trustedOrigins: ['http://localhost:3000'],
+  trustedOrigins: env.BETTER_AUTH_TRUSTED_ORIGINS.split(','),
   socialProviders: {
     google: {
       prompt: 'select_account',
