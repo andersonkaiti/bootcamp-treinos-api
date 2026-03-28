@@ -1,6 +1,8 @@
-# 🏋️ Bootcamp Treinos API
+# 🏋️ TreinAI API
 
 <div align="center">
+
+🌍 **API em Produção:** [api.treinai.space](https://api.treinai.space)
 
 **API robusta** desenvolvida para o gerenciamento de planos de treino, exercícios e sessões, focada em performance e experiência do desenvolvedor.
 
@@ -17,17 +19,13 @@
 
 ---
 
-## 🎯 Sobre
+## 🎯 Sobre o Projeto
 
-O **Bootcamp Treinos API** é uma solução completa para gestão fitness, permitindo que usuários criem planos de treino personalizados, organizem seus dias de atividades, detalhem exercícios e registrem suas sessões em tempo real.
+O **TreinAI API** (anteriormente designado como Bootcamp Treinos) é o núcleo fundacional de uma plataforma robusta projetada para revolucionar o ecossistema de gestão e planejamento fitness. Construída focando em escalabilidade severa e alta performance, esta API atende à necessidade crescente de uma personalização fina nos treinamentos físicos. Por meio desta arquitetura limpa, não só profissionais como os próprios utilizadores podem estruturar detalhadamente suas jornadas: desde a conceitualização de planos globais de treino, até a orquestração minuciosa de dias ativos, ciclos de descanso e baterias rigorosas de exercícios parametrizados.
 
-| Recurso | Descrição |
-| :--- | :--- |
-| **Autenticação** | Login seguro via Email/Senha com Better Auth |
-| **Gestão de Treinos** | Criação e organização de planos, dias e exercícios |
-| **Sessões** | Registro de início e fim de cada treino em tempo real |
-| **Documentação** | Interface interativa Scalar em `/docs` |
-| **Validação** | Tipagem estática rigorosa com Zod |
+Indo além dos moldes tradicionais e estáticos, o sistema destaca-se por prover um aparato completo para o registro dinâmico e em "tempo real" das sessões ativas. O motor processual não apenas capta, mas assegura com precisão os instantes exatos de início e conclusão de cada rotina completada. Essa manipulação temporal é severamente gerenciada atrelada ao relógio universal (UTC), anulando divergências geográficas ou surpresas decorrentes dos horários de verão globais.
+
+A segurança, a precisão e a resiliência não são tratadas como atributos, mas sim fundações. Incorporamos um paradigma moderno de defesa estabelecendo sessões blindadas por meio do **Better Auth**. Paralelamente, qualquer tentativa de manipulação de dados em nossa malha de rotas (Fastify) é rigorosamente enquadrada e validada pelo Zod, estabelecendo contratos imutáveis antes mesmo da persistência em nosso banco PostgreSQL. Como culminação natural da nossa ênfase numa "Developer Experience" (DX) premium, expomos dinamicamente nossas coleções tipadas via documentação interativa com Scalar, agilizando drasticamente os ciclos de integração com os ecossistemas front-end.
 
 ---
 
@@ -51,11 +49,10 @@ O **Bootcamp Treinos API** é uma solução completa para gestão fitness, permi
 
 ### Fluxo de Aplicação
 
-
 ```mermaid
 graph TD
-    A[Usuário] -->|Requisição| B[Fastify Server]
-    B -->|Proxy| C[Better Auth]
+    A[Usuário/Frontend] -->|Requisição| B[Fastify Server]
+    B -->|Middleware| C[Better Auth]
     B -->|Validação Zod| D[Handlers/Routes]
     D -->|ORM| E[Prisma Client]
     E -->|Persistência| F[(PostgreSQL)]
@@ -64,18 +61,90 @@ graph TD
 
 ---
 
+## 🗺 Modelo de Dados (ERD)
+
+Abaixo, a representação visual detalhada das entidades do sistema:
+
+```mermaid
+erDiagram
+    User ||--o{ WorkoutPlan : "possui"
+    WorkoutPlan ||--o{ WorkoutDay : "contém"
+    WorkoutDay ||--o{ WorkoutExercise : "inclui"
+    WorkoutDay ||--o{ WorkoutSession : "registra"
+    User ||--o{ Session : "autenticação"
+    User ||--o{ Account : "autenticação"
+    
+    User {
+        string id PK
+        string name
+        string email
+        boolean emailVerified
+        string image
+        int weightInGrams
+        int heightInCentimeters
+        int age
+        int bodyFatPercentage
+        datetime createdAt
+        datetime updatedAt
+    }
+    
+    WorkoutPlan {
+        string id PK
+        string name
+        boolean isActive
+        string userId FK
+        datetime createdAt
+        datetime updatedAt
+    }
+    
+    WorkoutDay {
+        string id PK
+        string name
+        boolean isRest
+        enum weekDay
+        int estimatedDurationInSeconds
+        string coverImageUrl
+        string workoutPlanId FK
+        datetime createdAt
+        datetime updatedAt
+    }
+    
+    WorkoutExercise {
+        string id PK
+        string name
+        int order
+        int sets
+        int reps
+        int restTimeInSeconds
+        string workoutDayId FK
+        datetime createdAt
+        datetime updatedAt
+    }
+    
+    WorkoutSession {
+        string id PK
+        datetime startedAt
+        datetime completedAt
+        string workoutDayId FK
+        datetime createdAt
+        datetime updatedAt
+    }
+```
+
+---
+
 ## ⚙️ Configuração
 
 ### 🔐 Variáveis de Ambiente
 
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+Crie um arquivo `.env` na raiz do projeto considerando o `.env.example` ou use as configurações abaixo:
 
 ```env
 PORT=8080
 DATABASE_URL="postgresql://user:password@localhost:5432/dbname?schema=public"
-# Configurações adicionais do Better Auth caso necessário
-BETTER_AUTH_SECRET=...
-BETTER_AUTH_URL=http://localhost:8080
+# Configurações do Better Auth
+BETTER_AUTH_SECRET="sua_chave_secreta"
+BETTER_AUTH_URL="http://localhost:8080"
 ```
 
 ### 🗄 Banco de Dados
@@ -124,8 +193,10 @@ pnpm run format
 
 ## 📘 Documentação da API
 
-A documentação interativa completa (Swagger/Scalar) está disponível em:
-👉 `http://localhost:8080/docs`
+A documentação interativa completa (Swagger/Scalar) está disponível na URL de produção:
+👉 `https://api.treinai.space/docs`
+
+(Ou em desenvolvimento ambiente local via `http://localhost:8080/docs`)
 
 Aqui você encontrará todos os modelos de dados e poderá testar as rotas diretamente do navegador.
 
@@ -141,59 +212,6 @@ A API utiliza o **Better Auth** para gerenciar sessões e autenticação.
 
 ---
 
-## 🗺 Banco de Dados (ERD)
-
-Abaixo, a representação visual das entidades do sistema:
-
-```mermaid
-erDiagram
-    User ||--o{ WorkoutPlan : "possui"
-    WorkoutPlan ||--o{ WorkoutDay : "contém"
-    WorkoutDay ||--o{ WorkoutExercise : "inclui"
-    WorkoutDay ||--o{ WorkoutSession : "registra"
-    
-    User {
-        string id PK
-        string name
-        string email
-        datetime createdAt
-    }
-    
-    WorkoutPlan {
-        string id PK
-        string name
-        boolean isActive
-        string userId FK
-    }
-    
-    WorkoutDay {
-        string id PK
-        string name
-        enum weekDay
-        boolean isRest
-        string workoutPlanId FK
-    }
-    
-    WorkoutExercise {
-        string id PK
-        string name
-        int sets
-        int reps
-        int restTime
-        string workoutDayId FK
-    }
-    
-    WorkoutSession {
-        string id PK
-        datetime startedAt
-        datetime completedAt
-        string workoutDayId FK
-    }
-```
-
----
-
 ## 📝 UTC (Coordinated Universal Time)
 
 UTC é o padrão global de referência para fusos horários. Não sofre ajuste de horário de verão e é definido com base em relógios atômicos de alta precisão. Na API, todas as datas de sessões são tratadas em UTC para garantir consistência.
-
