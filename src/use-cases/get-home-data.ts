@@ -146,8 +146,10 @@ export class GetHomeData {
           ?.isRest ?? false
       const isCompleted = completedDates.has(dateKey)
 
-      if (isCompleted || isRestDay) {
+      if (isCompleted) {
         workoutStreak++
+        checkDate = checkDate.subtract(1, 'day')
+      } else if (isRestDay) {
         checkDate = checkDate.subtract(1, 'day')
       } else {
         break

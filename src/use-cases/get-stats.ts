@@ -134,8 +134,10 @@ export class GetStats {
             ?.isRest ?? false
         const isCompleted = completedDates.has(dateKey)
 
-        if (isCompleted || isRestDay) {
+        if (isCompleted) {
           workoutStreak++
+          checkDate = checkDate.subtract(1, 'day')
+        } else if (isRestDay) {
           checkDate = checkDate.subtract(1, 'day')
         } else {
           // If it's today and not completed/rest, just skip it and check yesterday
