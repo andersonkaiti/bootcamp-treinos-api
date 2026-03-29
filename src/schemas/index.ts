@@ -79,6 +79,34 @@ export const workoutPlanSchema = z.object({
   ),
 })
 
+export const updateWorkoutPlanBodySchema = z.object({
+  name: z.string().trim().min(1).optional(),
+  workoutDays: z
+    .array(
+      z.object({
+        id: z.uuid().optional(),
+        name: z.string().trim().min(1).optional(),
+        weekDay: z.enum(WeekDay).optional(),
+        isRest: z.boolean().optional(),
+        estimatedDurationInSeconds: z.number().min(1).optional(),
+        coverImageUrl: z.url().optional(),
+        exercises: z
+          .array(
+            z.object({
+              id: z.uuid().optional(),
+              name: z.string().trim().min(1).optional(),
+              sets: z.number().min(1).optional(),
+              reps: z.number().min(1).optional(),
+              restTimeInSeconds: z.number().min(1).optional(),
+              order: z.number().min(0).optional(),
+            }),
+          )
+          .optional(),
+      }),
+    )
+    .optional(),
+})
+
 /*
 |--------------------------------------------------------------------------
 | Workout Plan Responses
