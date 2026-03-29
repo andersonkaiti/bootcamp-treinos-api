@@ -216,14 +216,20 @@ export const getUserTrainDataResponseSchema = z
     heightInCentimeters: z.number(),
     age: z.number(),
     bodyFatPercentage: z.number().int().min(0).max(100),
+    goal: z.string().nullable().optional(),
+    availableDays: z.array(z.string()).optional(),
+    physicalLimitations: z.string().nullable().optional(),
   })
   .nullable()
 
 export const upsertUserTrainDataBodySchema = z.object({
-  weightInGrams: z.number().min(1),
-  heightInCentimeters: z.number().min(1),
-  age: z.number().min(1),
-  bodyFatPercentage: z.number().int().min(0).max(100),
+  weightInGrams: z.number().min(1).optional(),
+  heightInCentimeters: z.number().min(1).optional(),
+  age: z.number().min(1).optional(),
+  bodyFatPercentage: z.number().int().min(0).max(100).optional(),
+  goal: z.string().optional(),
+  availableDays: z.array(z.string()).optional(),
+  physicalLimitations: z.string().optional(),
 })
 
 export const upsertUserTrainDataResponseSchema = z.object({
@@ -232,4 +238,7 @@ export const upsertUserTrainDataResponseSchema = z.object({
   heightInCentimeters: z.number(),
   age: z.number(),
   bodyFatPercentage: z.number().int().min(0).max(100),
+  goal: z.string().nullable().optional(),
+  availableDays: z.array(z.string()).optional(),
+  physicalLimitations: z.string().nullable().optional(),
 })

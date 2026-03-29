@@ -7,6 +7,9 @@ interface OutputDto {
   heightInCentimeters: number
   age: number
   bodyFatPercentage: number
+  goal?: string | null
+  availableDays?: string[]
+  physicalLimitations?: string | null
 }
 
 export class GetUserTrainData {
@@ -20,6 +23,9 @@ export class GetUserTrainData {
         heightInCentimeters: true,
         age: true,
         bodyFatPercentage: true,
+        goal: true,
+        availableDays: true,
+        physicalLimitations: true,
       },
     })
 
@@ -40,6 +46,9 @@ export class GetUserTrainData {
       heightInCentimeters: user.heightInCentimeters,
       age: user.age,
       bodyFatPercentage: user.bodyFatPercentage,
+      goal: user.goal,
+      availableDays: user.availableDays,
+      physicalLimitations: user.physicalLimitations,
     }
   }
 }
