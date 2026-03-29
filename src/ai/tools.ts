@@ -5,6 +5,7 @@ import { WeekDay } from '../generated/prisma/enums'
 import { CreateWorkoutPlan } from '../use-cases/create-workout-plan'
 import { GetUserTrainData } from '../use-cases/get-user-train-data'
 import { ListWorkoutPlans } from '../use-cases/list-workout-plans'
+import { UpdateWorkoutPlan } from '../use-cases/update-workout-plan'
 import { UpsertUserTrainData } from '../use-cases/upsert-user-train-data'
 
 export function getTools(userId: string): ToolSet {
@@ -55,12 +56,15 @@ export function getTools(userId: string): ToolSet {
     }),
 
     createWorkoutPlan: tool({
-      description: 'Cria um novo plano de treino completo para o usuário.',
+      description:
+        'Cria um novo plano de treino completo para o usuário ou atualiza um existente se o planId for fornecido.',
       inputSchema: z.object({
+        planId: z.string().uuid().optional().describe('ID do plano a atualizar (opcional). Se fornecido, atualiza o plano em vez de criar um novo.'),
         name: z.string().describe('Nome do plano de treino'),
         workoutDays: z
           .array(
             z.object({
+              id: z.string().uuid().optional().describe('ID do dia de treino (obrigatório para atualizar dias existentes)'),
               name: z
                 .string()
                 .describe('Nome do dia (ex: Peito e Tríceps, Descanso)'),
@@ -75,12 +79,14 @@ export function getTools(userId: string): ToolSet {
                 ),
               coverImageUrl: z
                 .url()
+                .optional()
                 .describe(
                   'URL da imagem de capa do dia de treino. Usar as URLs de superior ou inferior conforme o foco muscular do dia.',
                 ),
               exercises: z
                 .array(
                   z.object({
+                    id: z.string().uuid().optional().describe('ID do exercício (obrigatório para atualizar exercícios existentes)'),
                     order: z.number().describe('Ordem do exercício no dia'),
                     name: z.string().describe('Nome do exercício'),
                     sets: z.number().describe('Número de séries'),
@@ -96,12 +102,22 @@ export function getTools(userId: string): ToolSet {
           .describe('Array com exatamente 7 dias de treino (MONDAY a SUNDAY)'),
       }),
       execute: async (input) => {
-        const createWorkoutPlan = new CreateWorkoutPlan()
-        return createWorkoutPlan.execute({
-          userId,
-          name: input.name,
-          workoutDays: input.workoutDays,
-        })
+        if (input.planId) {
+          const updateWorkoutPlan = new UpdateWorkoutPlan()
+          return updateWorkoutPlan.execute({
+            userId,
+            planId: input.planId,
+            name: input.name,
+            workoutDays: input.workoutDays,
+          })
+        } else {
+          const createWorkoutPlan = new CreateWorkoutPlan()
+          return createWorkoutPlan.execute({
+            userId,
+            name: input.name,
+            workoutDays: input.workoutDays,
+          })
+        }
       },
     }),
   }
