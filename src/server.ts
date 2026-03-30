@@ -12,12 +12,14 @@ import { authRoute } from './routes/auth/index'
 import { getHomeDataRoute } from './routes/home/get-home-data'
 import { statsRoute } from './routes/stats'
 import { userRoutes } from './routes/user/index'
+import { addWorkoutDayRoute } from './routes/workout/add-workout-day'
 import { completeWorkoutSessionRoute } from './routes/workout/complete-workout-session'
 import { createWorkoutPlanRoute } from './routes/workout/create-workout-plan'
 import { createWorkoutSessionRoute } from './routes/workout/create-workout-session'
 import { getWorkoutDayRoute } from './routes/workout/get-workout-day'
 import { getWorkoutPlanRoute } from './routes/workout/get-workout-plan'
 import { listWorkoutPlansRoute } from './routes/workout/list-workout-plans'
+import { removeWorkoutDayRoute } from './routes/workout/remove-workout-day'
 import { updateWorkoutPlanRoute } from './routes/workout/update-workout-plan'
 
 const app = Fastify({
@@ -39,6 +41,8 @@ await app.register(fastifyCors, {
 
 app.register(createWorkoutPlanRoute)
 app.register(updateWorkoutPlanRoute)
+app.register(addWorkoutDayRoute)
+app.register(removeWorkoutDayRoute)
 app.register(getWorkoutPlanRoute)
 app.register(listWorkoutPlansRoute)
 app.register(getWorkoutDayRoute)

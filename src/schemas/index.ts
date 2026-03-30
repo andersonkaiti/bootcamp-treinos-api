@@ -21,7 +21,7 @@ const exerciseSchema = z.object({
   restTimeInSeconds: z.number().min(1),
 })
 
-const workoutDayBaseSchema = z.object({
+export const workoutDayBaseSchema = z.object({
   id: z.uuid(),
   name: z.string(),
   weekDay: z.enum(WeekDay),
@@ -77,6 +77,31 @@ export const workoutPlanSchema = z.object({
       ),
     }),
   ),
+})
+
+/*
+|--------------------------------------------------------------------------
+| Workout Day Creation/Addition
+|--------------------------------------------------------------------------
+*/
+
+export const addWorkoutDayBodySchema = z.object({
+  name: z.string().trim().min(1),
+  weekDay: z.enum(WeekDay),
+  isRest: z.boolean().default(false),
+  estimatedDurationInSeconds: z.number().min(1),
+  coverImageUrl: z.url().optional(),
+  exercises: z
+    .array(
+      z.object({
+        name: z.string().trim().min(1),
+        sets: z.number().min(1),
+        reps: z.number().min(1),
+        restTimeInSeconds: z.number().min(1),
+        order: z.number().min(0),
+      }),
+    )
+    .default([]),
 })
 
 export const updateWorkoutPlanBodySchema = z.object({
@@ -215,7 +240,7 @@ export const getUserTrainDataResponseSchema = z
     weightInGrams: z.number(),
     heightInCentimeters: z.number(),
     age: z.number(),
-    bodyFatPercentage: z.number().int().min(0).max(100),
+    bodyFatPercentage: z.number().int().min(0).max(100).nullable(),
     goal: z.string().nullable().optional(),
     availableDays: z.array(z.string()).optional(),
     physicalLimitations: z.string().nullable().optional(),
@@ -237,7 +262,7 @@ export const upsertUserTrainDataResponseSchema = z.object({
   weightInGrams: z.number(),
   heightInCentimeters: z.number(),
   age: z.number(),
-  bodyFatPercentage: z.number().int().min(0).max(100),
+  bodyFatPercentage: z.number().int().min(0).max(100).nullable(),
   goal: z.string().nullable().optional(),
   availableDays: z.array(z.string()).optional(),
   physicalLimitations: z.string().nullable().optional(),
