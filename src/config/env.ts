@@ -8,6 +8,7 @@ const envSchema = z.object({
   BETTER_AUTH_URL: z.url(),
   CORS_ORIGIN: z.string(),
   BETTER_AUTH_TRUSTED_ORIGINS: z.string(),
+  NODE_ENV: z.enum(['development', 'production']).default('development'),
 })
 
 export const env = envSchema.parse(process.env)

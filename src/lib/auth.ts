@@ -4,6 +4,8 @@ import { bearer, openAPI } from 'better-auth/plugins'
 import { env } from '../config/env'
 import { prisma } from './db'
 
+const isProduction = env.NODE_ENV === 'production'
+
 export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
   basePath: '/api/auth',
@@ -20,14 +22,18 @@ export const auth = betterAuth({
   }),
   plugins: [openAPI(), bearer()],
   advanced: {
-    crossSubDomainCookies: {
-      enabled: true,
-      domain: '.treinai.space',
-    },
-    useSecureCookies: true,
+    crossSubDomainCookies: isProduction
+      ? {
+          enabled: true,
+          domain: '.treinai.space',
+        }
+      : undefined,
+
+    useSecureCookies: isProduction,
+
     defaultCookieAttributes: {
-      sameSite: 'none',
-      secure: true,
+      sameSite: isProduction ? 'none' : 'lax',
+      secure: isProduction,
     },
   },
 })
