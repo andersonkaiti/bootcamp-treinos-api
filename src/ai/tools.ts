@@ -24,21 +24,40 @@ export function getTools(userId: string): ToolSet {
 
     updateUserTrainData: tool({
       description:
-        'Atualiza os dados de treino do usuário autenticado. O peso deve ser em gramas (converter kg * 1000).',
+        'Atualiza os dados do usuário autenticado (físicos e preferências). O peso deve ser em gramas (converter kg * 1000).',
       inputSchema: z.object({
         weightInGrams: z
           .number()
+          .optional()
           .describe('Peso do usuário em gramas (ex: 70kg = 70000)'),
         heightInCentimeters: z
           .number()
+          .optional()
           .describe('Altura do usuário em centímetros'),
-        age: z.number().describe('Idade do usuário'),
+        age: z.number().optional().describe('Idade do usuário'),
         bodyFatPercentage: z
           .number()
           .int()
           .min(0)
           .max(100)
+          .optional()
           .describe('Percentual de gordura corporal (0 a 100)'),
+        goal: z
+          .string()
+          .optional()
+          .describe(
+            'Objetivo do treino (ex: emagrecimento, hipertrofia, força)',
+          ),
+        availableDays: z
+          .array(z.string())
+          .optional()
+          .describe(
+            'Dias da semana disponíveis (ex: ["MONDAY", "WEDNESDAY", "FRIDAY"])',
+          ),
+        physicalLimitations: z
+          .string()
+          .optional()
+          .describe('Limitações físicas ou lesões (ex: "tendinite no ombro")'),
       }),
       execute: async (params) => {
         const upsertUserTrainData = new UpsertUserTrainData()
